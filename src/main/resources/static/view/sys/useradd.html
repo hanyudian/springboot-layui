@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/index.css" rel="stylesheet">
+    <link href="../../css/page.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <title>Title</title>
+</head>
+<body>
+<div class="mainbody">
+    <div class="formbody">
+        <form name="infoForm" id="infoForm">
+            <div class="modal-body" style="background-color: white;">
+                <input id="userid" name="userid" type="hidden" value="">
+                <div class="form-group">
+                    <label class="control-label">用户名：</label>
+                    <div class="col-sm-6">
+                        <input id="username" name="username" class="form-control" type="text"  >
+                        <span class="help-block"> <i class="fa fa-info-circle"></i> 必填</span>
+                    </div>
+                </div>
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label">密码：</label>-->
+                    <!--<div class="col-sm-6">-->
+                        <!--<input id="password" name="password" class="form-control" type="text" >-->
+                        <!--<span class="help-block"> <i class="fa fa-info-circle"></i>例如：123456</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="form-group">
+                    <label class="control-label">部门名称：</label>
+                    <div class="col-sm-6">
+                        <input id="deptid" name="deptid" class="form-control" type="hidden" >
+                        <input id="deptname" name="deptname" class="form-control" type="text" readonly="true" onclick="openDeptwin()" >
+                        <span class="help-block"><i class="fa fa-info-circle"></i> 请选择部门</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">真实姓名：</label>
+                    <div class="col-sm-6">
+                        <input id="realname" name="realname" class="form-control" type="text" >
+                        <span class="help-block"><i class="fa fa-info-circle"></i> 选填</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">电话：</label>
+                    <div class="col-sm-6">
+                        <input id="phone" name="phone" class="form-control" type="text" >
+                        <span class="help-block"><i class="fa fa-info-circle"></i> 例如：42000</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">权限：</label>
+                    <div class="col-sm-6">
+                        <select class="form-control" name="roleid" id="roleid">
+                        </select>
+                        <input id="name" name="name" type="hidden">
+                    </div>
+                </div>
+        
+            </div>
+            <div class="modal-footer">
+                <input  type="submit" value="提交" class="btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../../statics/js/common/jquery-1.10.2.min.js"></script>
+<script src="../../statics/js/common/JQuery.XDomainRequest.min.js"></script>
+<script src="../../statics/js/common/jquery.cookie.js"></script>
+<script src="../../statics/js/common/common.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.form.min.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.validate.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/messages_zh.js"></script>
+<script src="../../statics/js/public/plugins/layer/layer/layer.js"></script>
+<script src="../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+<script src="../../statics/js/static/sys/useradd.js"></script>
+</body>
+</html>

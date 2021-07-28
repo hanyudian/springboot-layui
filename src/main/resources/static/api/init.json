@@ -1,0 +1,268 @@
+{
+  "homeInfo": {
+    "title": "规章制度",
+    "href": "view/regulation.html"
+  },
+  "logoInfo": {
+    "title": "LAYUI MINI",
+    "image": "images/logo.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "id": 2,
+      "pid": 1,
+      "title": "车间",
+      "icon": "fa fa-home",
+      "href": "",
+      "target": "",
+      "ischild": 1,
+      "child": [
+        {
+          "id": 3,
+          "pid": 2,
+          "title": "车间概况",
+          "icon": "",
+          "href": "",
+          "target": "",
+          "ischild": 1,
+          "child": [
+            {
+              "id": 4,
+              "pid": 3,
+              "title": "设备概况",
+              "icon": null,
+              "href": "view/sys/ContentDetail.html?contentId=15",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            },
+            {
+              "id": 5,
+              "pid": 3,
+              "title": "人员概况",
+              "icon": null,
+              "href": "view/sys/ContentDetail.html?contentId=16",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            },
+            {
+              "id": 6,
+              "pid": 3,
+              "title": "组织概况",
+              "icon": null,
+              "href": "view/sys/ContentDetail.html?contentId=17",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "pid": 2,
+          "title": "规章制度",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=7",
+          "target": "",
+          "ischild": 1,
+          "child": null
+        },
+        {
+          "id": 8,
+          "pid": 2,
+          "title": "技术资料",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=8",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 9,
+          "pid": 2,
+          "title": "安全生产",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=9",
+          "target": "",
+          "ischild": 1,
+          "child": null
+        },
+        {
+          "id": 10,
+          "pid": 2,
+          "title": "职教管理",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=10",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 11,
+          "pid": 2,
+          "title": "物资管理",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=11",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 12,
+          "pid": 2,
+          "title": "党政工团综合管理",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=12",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 13,
+          "pid": 2,
+          "title": "下载基地",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=13",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 14,
+          "pid": 2,
+          "title": "协同办公",
+          "icon": "",
+          "href": "page/404.html",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 15,
+          "pid": 2,
+          "title": "管理员",
+          "icon": "",
+          "href": "view/sys/ContentManager.html?id=15",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "pid": 1,
+      "title": "科室",
+      "icon": "",
+      "href": "",
+      "target": "",
+      "ischild": 1,
+      "child": [
+        {
+          "id": 17,
+          "pid": 16,
+          "title": "协同办公",
+          "icon": "",
+          "href": "",
+          "target": "",
+          "ischild": 0,
+          "child": [
+            {
+              "id": 18,
+              "pid": 17,
+              "title": "规章制度",
+              "icon": null,
+              "href": "",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            },
+            {
+              "id": 19,
+              "pid": 17,
+              "title": "技术资料",
+              "icon": null,
+              "href": "",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            },
+            {
+              "id": 20,
+              "pid": 17,
+              "title": "发布公告",
+              "icon": null,
+              "href": "",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            },
+            {
+              "id": 21,
+              "pid": 17,
+              "title": "发布督办",
+              "icon": null,
+              "href": "",
+              "target": null,
+              "ischild": 0,
+              "child": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "pid": 1,
+      "title": "管理员",
+      "icon": "",
+      "href": "",
+      "target": "",
+      "ischild": 1,
+      "child": [
+        {
+          "id": 23,
+          "pid": 22,
+          "title": "角色维护",
+          "icon": "",
+          "href": "view/sys/rolemanager.html",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 24,
+          "pid": 22,
+          "title": "用户维护",
+          "icon": "",
+          "href": "view/sys/usermanager.html",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 25,
+          "pid": 22,
+          "title": "部门维护",
+          "icon": "",
+          "href": "view/sys/deptmanager.html",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        },
+        {
+          "id": 26,
+          "pid": 22,
+          "title": "栏目维护",
+          "icon": "",
+          "href": "view/sys/modulemanager.html",
+          "target": "",
+          "ischild": 0,
+          "child": null
+        }
+      ]
+    }
+  ]
+}

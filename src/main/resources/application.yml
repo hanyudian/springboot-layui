@@ -1,0 +1,113 @@
+server:
+  port: 7700
+  servlet:
+    context-path: /gwdtz
+spring:
+  thymeleaf:
+    cache: false
+  application:
+    name: gwdtz
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+#      url: jdbc:mysql://10.94.18.90:3306/db_gwdtz?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://localhost:3306/db_layui_test?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: hs197316
+      driver-class-name: com.mysql.jdbc.Driver
+      ##################    连接池配置    ################
+      #连接池建立时创建的初始化连接数
+      initial-size: 5
+      #连接池中最大的活跃连接数
+      max-active: 20
+      #连接池中最小的活跃连接数
+      min-idle: 5
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      validation-query-timeout: 30000
+      #是否在获得连接后检测其可用性
+      test-on-borrow: false
+      #是否在连接放回连接池后检测其可用性
+      test-on-return: false
+      #是否在连接空闲一段时间后检测其可用性
+      test-while-idle: true
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall
+      #监控后台账号和密码
+      stat-view-servlet:
+        login-username: admin
+        login-password: 666666
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+#logging配置
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    root: info
+    com:
+      gwdtz:
+        springboot:
+          dao: debug
+    org:
+      springframework:
+        jdbc:
+          datasource: debug
+        boot: info
+        security: info
+      mybatis:
+        spring: debug
+
+
+#swagger开关
+swagger2:
+  enable: false
+
+#redis配置开始
+redis:
+  server:
+  #redis服务器地址
+    host: 10.94.18.88
+  #host: 127.0.0.1
+  #redis服务器连接端口
+    port: 6379
+  #redis服务器连接密码(默认为空)
+    password: kfsb@xxjss
+  #连接超时时间
+    timeOut: 5000
+  #最小空闲数  空闲数依据访问缓存的频率设置，如果有较高并发建议设置大些，避免反复销毁创建连接，反之设置小些
+    maxIdle: 50
+    #获取连接最大等待时间，建议不要设置太长时间
+    maxWaitMillis: 500
+    #最大连接数
+    maxTotal: 500
+
+
+#jwt密钥
+jwt:
+  secreKey: 78944878877848fg)
+  accessTokenExpireTime: PT2H
+  refreshTokenExpireTime: PT8H
+  refreshTokenExpireAppTime: P30D
+  issuer: com.hhht.org.cn
+
+file:
+  # 文件上传路径
+  uploadFolder: E://gwdtzUpload/
+  # 对外访问的资源路径
+  staticAccessPath: /upfile/**
+  Accessurl: /upfile/
+
+
+##产品名称
+#productName: 呼铁局网站集群开发平台
+#productVersion: V1.0
+

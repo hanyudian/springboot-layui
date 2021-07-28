@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="../../../css/index.css" rel="stylesheet">
+		<link href="../../../css/page.css" rel="stylesheet">
+		<link href="../../../lib/layui-v2.6.3/css/layui.css">
+		<script src="../../../statics/js/public/plugins/layer/layer/layer.js"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="mainbody">
+			<div class="formbody">
+				<form id="infoForm" name="infoForm">
+					<div class="modal-body" style="background-color: white;">
+						<input id="id" name="id" type="hidden">
+						<input id="persontype" name="persontype" type="hidden">
+						<div class="form-group">
+							<label class="control-label">事项概况：</label>
+							<div class="col-sm-6">
+								<input id="title" name="title" class="form-control" type="text" aria-required="true" aria-invalid="false" >
+								<span class="help-block"><i class="fa-info-circle"></i> 注意：必填项</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">周期：</label>
+							<div class="col-sm-6">
+								<select class="form-control" name="type" id="type" onchange="fun()">
+									<option value="">请选择</option>
+									<option value="0">指定日期（一次）</option>
+									<option value="1">日</option>
+									<option value="2">周</option>
+									<option value="3">月</option>
+									<option value="4">季度</option>
+									<option value="5">年</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group" id="change1">
+<!--							<label class="control-label">每年第几个月:</label>-->
+<!--							<div class="col-sm-6">-->
+<!--								<select class="form-control" name="quarter" id="quarter">-->
+<!--									<option value="">请选择</option>-->
+<!--								</select>-->
+<!--							</div>-->
+						</div>
+						<div class="form-group" id="change2">
+<!--							<label class="control-label">每季度第几个月:</label>-->
+<!--							<div class="col-sm-6">-->
+<!--								<select class="form-control" name="quarter" id="quarter">-->
+<!--									<option value="">请选择</option>-->
+<!--									<option value="0">每季度第一个月</option>-->
+<!--									<option value="1">每季度第二个月</option>-->
+<!--									<option value="2">每季度第三个月</option>-->
+<!--								</select>-->
+<!--							</div>-->
+						</div>
+						<div class="form-group" id="change3">
+
+						</div>
+						<div class="form-group" id="change4">
+<!--							<label class="control-label">日期选择:</label>-->
+<!--							<div class="col-sm-6">-->
+<!--								<input type="text" name="calltime" id="calltime" autocomplete="off" class="form-control">-->
+<!--							</div>-->
+						</div>
+						<div class="form-group">
+							<label class="control-label">是否开启：</label>
+							<select class="form-control" name="open" id="open">
+								<option value="">请选择</option>
+								<option value="0">关闭</option>
+								<option value="1" selected>开启</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label class="control-label">上传图片：</label>
+							<div class="col-sm-6">
+								<input style="border-radius: 5px;width:500px;height: 30px" id="addpicurl" name="addpicurl" type="file" accept=".jpg,.jpeg,.png" />
+								<span class="help-block"><i class="fa-info-circle"></i>
+									<input style="margin-left: 5px" id="upFileBtn" type="button" value="上传图片" onclick="upload()"/>
+									<input style="margin-left: 5px" id="deteleBtn" type="button" value="清除图片" onclick="cleanup()"/>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">图片路径：</label>
+							<div class="col-sm-6">
+								<input id="imageurl" name="imageurl" class="form-control" type="text" value=""/><br>
+								<input id="imagealt" name="imagealt" type="hidden" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">上传附件：</label>
+							<div class="col-sm-6">
+								<input style="border-radius: 5px;width:500px;height: 30px" id="adduploadfiles" name="adduploadfiles" type="file" value="请选择文件" multiple="" />
+								<span class="help-block"><i class="fa-info-circle"></i>
+									<input style="margin-left: 5px" id="upMutiFileBtn" type="button" value="上传附件" onclick="uploadMutiFile()"/>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">附件列表：</label>
+							<div class="col-sm-6">
+								<table id="tb_users" class="tablelist">
+									<thead>
+									<tr>
+										<th>文件名</th>
+										<th>文件类型</th>
+										<th>文件大小</th>
+										<th>附件查看</th>
+									</tr>
+									</thead>
+									<tbody id="infoList">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div id="diaplaypic" name="diaplaypic">
+						<input style="margin-left: 5px; width: 100%;" id="jsonArray" name="jsonArray" type="hidden" value=""/>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" value="提交" class="btn-primary" />
+					</div>
+				</form>
+
+			</div>
+		</div>
+
+
+
+
+
+		<script src="../../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+
+		</script>
+		<script src="../../../statics/js/common/jquery-1.10.2.min.js"></script>
+		<script src="../../../statics/js/common/JQuery.XDomainRequest.min.js"></script>
+		<script src="../../../statics/js/common/jquery.cookie.js"></script>
+		<script src="../../../statics/js/common/common.js"></script>
+
+
+		<script src="../../../statics/js/public/jquery-validation/1.14.0/jquery.form.min.js"></script>
+		<script src="../../../statics/js/public/jquery-validation/1.14.0/jquery.validate.js"></script>
+		<script src="../../../statics/js/public/jquery-validation/1.14.0/messages_zh.js"></script>
+		<script src="../../../statics/js/public/jquery-validation/jquery.metadata.js"></script>
+<!--		<script src="../../../statics/js/public/plugins/layer/layer/layer.js"></script>-->
+		<script src="../../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+
+		<script src="../../../statics/js/public/plugins/kindeditor/kindeditor-all.js"></script>
+		<script src="../../../statics/js/public/plugins/kindeditor/plugins/code/prettify.js"></script>
+
+		<script src="../../../statics/js/public/ajaxfileupload.js"></script>
+
+		<script src="../../../statics/js/static/sys/schedule/scheduleedit.js"></script>
+
+	</body>
+
+
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="../../css/index.css" rel="stylesheet">
+		<link href="../../css/page.css" rel="stylesheet">
+		<link href="../../css/pageView.css" rel="stylesheet">
+		<title></title>
+	</head>
+
+	<body class="gray-bg">
+		<div class="formtop">
+			<button id="btn-add" class="btn btn-add" type="button">发布</button>
+			<!--<button id="btn-upd" class="btn btn-upd" type="button">编辑</button>-->
+			<button id="btn-del" class="btn btn-del" type="button">删除</button>
+			<table cellspacing="0" cellpadding="0" style="float: right; margin: 0;">
+				<tr>
+					<td>
+						<input id="strkey" name="strkey" type="text" class="searchinput" style="width: 200px"/>
+					</td>
+					<td>
+						<a id="btn_search" class="btn_search" onclick="contentListInit()">查询</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="formbody">
+			<table id="tb_users" class="tablelist">
+				<thead>
+					<tr>
+						<th><input name="btSeletAll" type="checkbox"></th>
+						<th>事项名称</th>
+						<th>责任车间</th>
+						<th>发布日期</th>
+						<th>完成日期</th>
+						<th>未完成车间数量</th>
+						<th style=" width:15%;">查看详情</th>
+						<th style=" width:15%;">落实情况</th>
+					</tr>
+				</thead>
+				<tbody id="infoList">
+
+				</tbody>
+			</table>
+			<div id="pageBody" class="pagin">
+			</div>
+		</div>
+
+		<script src="../../statics/js/common/jquery-1.10.2.min.js"></script>
+		<script src="../../statics/js/common/JQuery.XDomainRequest.min.js"></script>
+		<script src="../../statics/js/common/jquery.cookie.js"></script>
+		<script src="../../statics/js/common/common.js"></script>
+
+		<script src="../../statics/js/public/plugins/layer/layer/layer.js"></script>
+	    <script src="../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+		<script src="../../statics/js/public/PagerView.js"></script>
+		<script src="../../statics/js/static/sys/contentmanager-hytz.js"></script>
+	</body>
+
+</html><!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>

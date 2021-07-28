@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gwdtz.springboot.dao.ModuleDao">
+    <sql id="columns">
+
+                a.id,
+                a.title,
+                a.pid,
+                a.code,
+                a.ischild,
+                a.href,
+                a.icon,
+                a.target,
+                a.sortno,
+                a.status,
+                a.createtime,
+                a.updatetime,
+                a.deleted
+
+    </sql>
+
+    <select id="getByPidTreeCheckQxs" resultType="com.gwdtz.springboot.entity.ModuleTree">
+        select
+        ifnull(a.id,"") as id,
+        ifnull(a.title,"") as title,
+        ifnull(a.pid,"") as pid,
+        ifnull(a.ischild,"") as ischild,
+        ifnull(a.href,"") as href,
+        ifnull(a.icon,"") as icon,
+        ifnull(a.target,"") as target
+        from sys_module a
+        <where>
+            AND a.pid = #{id}
+            <if test="ids != null">
+                and a.id in
+                <foreach item="item" collection="ids" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY a.sortno
+    </select>
+
+    <select id="getByPidTreeCheck" resultType="com.gwdtz.springboot.entity.ModuleTree" parameterType="java.lang.String">
+        select
+        a.id AS "id",
+        a.title AS "title",
+        a.pid AS "pid",
+        a.code AS "code",
+        a.ischild AS "ischild",
+        a.href as "href",
+        a.icon as "icon",
+        a.target as "target",
+        a.sortno AS "sortno",
+        a.status AS "status",
+        a.createtime AS "createtime",
+        a.updatetime AS "updatetime",
+        a.deleted AS "deleted"
+
+        from sys_module a
+        <where>
+            AND a.pid = #{id}
+        </where>
+        ORDER BY a.sortno
+    </select>
+
+    <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.ModuleDO" useGeneratedKeys="true"
+            keyProperty="id">
+
+                insert into sys_module(code,title,pid,ischild,href,icon,target,sortno,deptid,status,createtime,deleted)
+                values (#{code},#{title},#{pid},#{ischild},#{href},#{icon},#{target},#{sortno},#{deptid},1,CURRENT_TIMESTAMP,1)
+
+    </insert>
+
+    <select id="selectModuleByPrimaryKey" parameterType="String" resultType="com.gwdtz.springboot.entity.ModuleDO">
+
+                select
+                a.id AS "id",
+                a.title AS "title",
+                a.pid AS "pid",
+                a.code AS "code",
+                a.ischild AS "ischild",
+                a.href as "href",
+                a.icon AS "icon",
+                a.status AS "status",
+                a.createtime AS "createtime",
+                a.updatetime AS "updatetime",
+                a.deleted AS "deleted",
+                a.deptid as "deptid",
+                b.deptname AS "deptname"
+                from sys_module a
+                left join sys_dept b
+                on a.deptid = b.deptid
+                where a.id = #{id}
+
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.ModuleDO">
+        update sys_module
+        set
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="icon != null and icon != ''">
+            icon = #{icon},
+        </if>
+        <if test="href != null and href != ''">
+            href = #{href},
+        </if>
+        status = 1,
+        updatetime = CURRENT_TIMESTAMP,
+        deleted = 1
+        where id = #{id}
+    </update>
+
+    <update id="updateNameByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.ModuleDO">
+        update sys_module
+        set
+        <if test="title != null and title != ''">
+            title = #{title}
+        </if>
+        where id = #{id}
+    </update>
+
+    <select id="getAllNodesIds" resultType="java.lang.String" parameterType="java.lang.String">
+
+              select id from sys_module where pid =#{id,jdbcType=VARCHAR}
+
+    </select>
+
+    <delete id="deleteParentNodesByAllIds">
+        delete from sys_module
+        where id IN
+        <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByPrimaryKey" parameterType="String">
+
+                delete from sys_module
+                where id = #{id}
+
+    </delete>
+
+    <select id="selectByPid" parameterType="long" resultType="com.gwdtz.springboot.entity.ModuleDO">
+        select
+        <include refid="columns"/>
+        from sys_module a
+        where a.pid = #{pid}
+    </select>
+
+    <!-- 根据pid获取最大sortno -->
+    <select id="getMaxSortno" resultType="java.lang.String">
+
+              select max(sortno) from sys_module where pid=#{pid}
+
+    </select>
+
+    <!-- 根据id获取ischild -->
+    <select id="getIschild" resultType="java.lang.Integer">
+
+              select ischild from sys_module where id =#{id}
+
+    </select>
+
+    <update id="updateIschild" parameterType="com.gwdtz.springboot.entity.ModuleDO">
+
+              update sys_module
+              set ischild = #{ischild}
+              where id = #{id}
+
+    </update>
+
+    <select id="getModuleAllList" resultType="com.gwdtz.springboot.entity.ModuleDO">
+        select
+        <include refid="columns"/>
+        from sys_module a
+    </select>
+
+    <select id="getModuleList" resultType="com.gwdtz.springboot.entity.ModuleDO" parameterType="String">
+        select
+        <include refid="columns"/>
+        from sys_module a
+        <where>
+            <if test="deptid != null and deptid != ''">
+                AND a.deptid = #{deptid}
+            </if>
+        </where>
+    </select>
+
+    <select id="findPid" parameterType="long" resultType="com.gwdtz.springboot.entity.ModuleDO">
+        select
+        <include refid="columns"/>
+        from sys_module a
+        <where>
+            a.pid=-1
+            <if test="deptid != null and deptid != ''">
+                AND a.deptid = #{deptid}
+            </if>
+        </where>
+    </select>
+
+    <select id="getMaxId" resultType="integer">
+
+                select max(id)
+                from sys_module
+
+    </select>
+
+
+    <delete id="deleteModuleByDeptId">
+
+                delete from sys_module
+                where deptid = #{deptid}
+
+    </delete>
+
+    <select id="getModuleListByCode" resultType="com.gwdtz.springboot.entity.ModuleDO">
+
+                select *
+                from sys_module
+                where length(code) = 8
+                and code like concat(#{code}, '%')
+                order by sortno
+
+    </select>
+
+
+    <select id="getUserModuleRootQxs" resultType="com.gwdtz.springboot.entity.layui.UserModule">
+        select
+        ifnull(a.id,"") as id,
+        ifnull(a.title,"") as title,
+        ifnull(a.pid,"") as pid,
+        ifnull(a.ischild,"") as ischild,
+        ifnull(a.href,"") as href,
+        ifnull(a.icon,"") as icon,
+        ifnull(a.target,"") as target
+        from sys_module a
+        <where>
+            AND a.pid = #{id}
+            <if test="ids != null">
+                and a.id in
+                <foreach item="item" collection="ids" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY a.sortno
+    </select>
+
+
+    <select id="getModuleLists" resultType="com.gwdtz.springboot.entity.ModuleDO">
+        select
+        ifnull(a.id,"") as id,
+        ifnull(a.title,"") as title,
+        ifnull(a.pid,"") as pid,
+        ifnull(a.ischild,"") as ischild,
+        ifnull(a.href,"") as href,
+        ifnull(a.icon,"") as icon,
+        ifnull(a.target,"") as target
+        from sys_module a
+        <where>
+            and a.id in
+            <foreach item="item" collection="ids" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        ORDER BY a.pid
+    </select>
+</mapper>
+
+
+
+
+
+

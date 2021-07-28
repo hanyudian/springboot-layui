@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gwdtz.springboot.dao.UserModuleDao">
+    <sql id="columns">
+		a.id AS "id",
+		a.userid AS "userid",
+		a.moduleid AS "moduleid"
+        a.status AS "status",
+        a.createtime AS "createtime",
+		a.updatetime AS "updatetime",
+		a.deleted AS "deleted"
+
+	</sql>
+
+
+    <!--删除记录-->
+    <delete id="deleteById">
+        delete from sys_usermodule where userid = #{userid}
+    </delete>
+    <delete id="deleteByUserid">
+        delete from sys_usermodule where userid = #{userid}
+    </delete>
+
+    <delete id="deleteByModuleId">
+        delete from sys_usermodule where moduleid = #{moduleid}
+    </delete>
+
+    <insert id="insert">
+        insert into sys_usermodule(userid,moduleid,status,createtime,deleted)
+        values(#{userid},#{moduleid},1,CURRENT_TIMESTAMP,1)
+    </insert>
+
+    <select id="getUserModuleList"  resultType="com.gwdtz.springboot.entity.UserModuleDO" parameterType="String">
+        select
+        a.moduleid as moduleid
+        from sys_usermodule a
+        <where>
+            <if test="userid != null and userid != ''">
+                AND a.userid = #{userid}
+            </if>
+        </where>
+    </select>
+    <select id="selectModuleById" resultType="Integer">
+        select
+        a.moduleid
+        from sys_usermodule a
+        where a.userid = #{userid}
+    </select>
+
+</mapper>

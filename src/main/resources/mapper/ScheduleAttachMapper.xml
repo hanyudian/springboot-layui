@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwdtz.springboot.dao.ScheduleAttachDao" >
+  <resultMap id="BaseResultMap" type="com.gwdtz.springboot.entity.ScheduleAttachDo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="attachrealname" property="attachrealname" jdbcType="VARCHAR" />
+    <result column="attachabsoluteurl" property="attachabsoluteurl" jdbcType="VARCHAR" />
+    <result column="attachrelativeurl" property="attachrelativeurl" jdbcType="VARCHAR" />
+    <result column="attachtype" property="attachtype" jdbcType="VARCHAR" />
+    <result column="attachsize" property="attachsize" jdbcType="DOUBLE" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="publishuser" property="publishuser" jdbcType="VARCHAR" />
+    <result column="publiship" property="publiship" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attachrealname, attachabsoluteurl, attachrelativeurl, attachtype, attachsize, 
+    createtime, updatetime, publishuser, publiship
+  </sql>
+
+  <select id="getScheduleAttachList" resultType="com.gwdtz.springboot.entity.ScheduleAttachDo">
+    select *
+    from user_schedule_attach
+    where id in
+    <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+      #{ids}
+    </foreach>
+  </select>
+
+  <delete id="deleteScheduleAttachByIds">
+    delete from
+    user_schedule_attach
+    where id in
+    <foreach collection="array" item="ids" index="index" open="(" close=")" separator=",">
+      #{ids}
+    </foreach>
+  </delete>
+
+  <!--删除附件-->
+  <delete id="deleteByAttachId">
+        delete from user_schedule_attach where id = #{attachid}
+    </delete>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_schedule_attach
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_schedule_attach
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gwdtz.springboot.entity.ScheduleAttachDo" >
+    insert into user_schedule_attach (id, attachrealname, attachabsoluteurl, 
+      attachrelativeurl, attachtype, attachsize, 
+      createtime, updatetime, publishuser, 
+      publiship)
+    values (#{id,jdbcType=BIGINT}, #{attachrealname,jdbcType=VARCHAR}, #{attachabsoluteurl,jdbcType=VARCHAR}, 
+      #{attachrelativeurl,jdbcType=VARCHAR}, #{attachtype,jdbcType=VARCHAR}, #{attachsize,jdbcType=DOUBLE}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, #{publishuser,jdbcType=VARCHAR}, 
+      #{publiship,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.ScheduleAttachDo" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+    insert into user_schedule_attach
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attachrealname != null" >
+        attachrealname,
+      </if>
+      <if test="attachabsoluteurl != null" >
+        attachabsoluteurl,
+      </if>
+      <if test="attachrelativeurl != null" >
+        attachrelativeurl,
+      </if>
+      <if test="attachtype != null" >
+        attachtype,
+      </if>
+      <if test="attachsize != null" >
+        attachsize,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="publishuser != null" >
+        publishuser,
+      </if>
+      <if test="publiship != null" >
+        publiship,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attachrealname != null" >
+        #{attachrealname,jdbcType=VARCHAR},
+      </if>
+      <if test="attachabsoluteurl != null" >
+        #{attachabsoluteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="attachrelativeurl != null" >
+        #{attachrelativeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="attachtype != null" >
+        #{attachtype,jdbcType=VARCHAR},
+      </if>
+      <if test="attachsize != null" >
+        #{attachsize,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishuser != null" >
+        #{publishuser,jdbcType=VARCHAR},
+      </if>
+      <if test="publiship != null" >
+        #{publiship,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.ScheduleAttachDo" >
+    update user_schedule_attach
+    <set >
+      <if test="attachrealname != null" >
+        attachrealname = #{attachrealname,jdbcType=VARCHAR},
+      </if>
+      <if test="attachabsoluteurl != null" >
+        attachabsoluteurl = #{attachabsoluteurl,jdbcType=VARCHAR},
+      </if>
+      <if test="attachrelativeurl != null" >
+        attachrelativeurl = #{attachrelativeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="attachtype != null" >
+        attachtype = #{attachtype,jdbcType=VARCHAR},
+      </if>
+      <if test="attachsize != null" >
+        attachsize = #{attachsize,jdbcType=DOUBLE},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishuser != null" >
+        publishuser = #{publishuser,jdbcType=VARCHAR},
+      </if>
+      <if test="publiship != null" >
+        publiship = #{publiship,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwdtz.springboot.entity.ScheduleAttachDo" >
+    update user_schedule_attach
+    set attachrealname = #{attachrealname,jdbcType=VARCHAR},
+      attachabsoluteurl = #{attachabsoluteurl,jdbcType=VARCHAR},
+      attachrelativeurl = #{attachrelativeurl,jdbcType=VARCHAR},
+      attachtype = #{attachtype,jdbcType=VARCHAR},
+      attachsize = #{attachsize,jdbcType=DOUBLE},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      publishuser = #{publishuser,jdbcType=VARCHAR},
+      publiship = #{publiship,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

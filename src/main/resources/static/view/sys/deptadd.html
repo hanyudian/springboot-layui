@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/index.css" rel="stylesheet">
+    <link href="../../css/page.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <title>Title</title>
+</head>
+<body>
+<div class="mainbody">
+    <div class="formbody">
+        <form name="infoForm" id="infoForm">
+            <div class="modal-body" style="background-color: white;">
+                <input id="deptid" name="deptid" type="hidden" value="">
+                <input id="pid" name="pid" type="hidden" value="">
+
+                <div class="form-group">
+                    <label class="control-label">部门名称：</label>
+                    <div class="col-sm-6">
+                        <input id="deptname" name="deptname" class="form-control" type="text" >
+                        <span class="help-block"> <i></i></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input  type="submit" value="提交" class="btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../../statics/js/common/jquery-1.10.2.min.js"></script>
+<script src="../../statics/js/common/jquery.xdomainrequest.min.js"></script>
+<script src="../../statics/js/common/jquery.cookie.js"></script>
+<script src="../../statics/js/common/common.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.form.min.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.validate.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/messages_zh.js"></script>
+<script src="../../statics/js/public/plugins/layer/layer/layer.js"></script>
+<script src="../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+<script src="../../statics/js/static/sys/deptadd.js"></script>
+</body>
+</html>

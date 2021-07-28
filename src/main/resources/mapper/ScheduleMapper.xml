@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwdtz.springboot.dao.ScheduleDao" >
+  <resultMap id="BaseResultMap" type="com.gwdtz.springboot.entity.ScheduleDo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userid" property="userid" jdbcType="BIGINT" />
+    <result column="attachids" property="attachids" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="persontype" property="persontype" jdbcType="INTEGER" />
+    <result column="open" property="open" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="quarter" property="quarter" jdbcType="INTEGER" />
+    <result column="week" property="week" jdbcType="INTEGER" />
+    <result column="day" property="day" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="time" property="time" jdbcType="TIME" />
+  </resultMap>
+
+  <select id="selectScheduleById" resultType="com.gwdtz.springboot.entity.ScheduleDo">
+    select *
+    from user_schedule
+    where id = #{id}
+  </select>
+
+  <select id="getAll" resultType="com.gwdtz.springboot.entity.ScheduleDo">
+    select * from user_schedule;
+  </select>
+
+  <select id="getScheduleList" resultType="com.gwdtz.springboot.entity.ScheduleDo">
+    select *
+    from user_schedule
+    <where>
+      userid = #{userid} and persontype = #{persontype}
+      <if test="strkey != null and strkey != ''">
+        and title like concat('%', #{strkey,jdbcType=VARCHAR}, '%')
+      </if>
+    </where>
+  </select>
+
+  <select id="selectScheduleByUserId" resultType="com.gwdtz.springboot.entity.ScheduleDo">
+    select *
+    from user_schedule
+    where userid = #{userid}
+    and open = 1
+  </select>
+
+  <select id="getScheduleListByPersonType" resultType="com.gwdtz.springboot.entity.ScheduleDo">
+    select *
+    from user_schedule
+    where userid = #{userid}
+    and persontype = #{persontype}
+    and open = 1
+  </select>
+
+<!--  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >-->
+<!--    select -->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from user_schedule-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </select>-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_schedule
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gwdtz.springboot.entity.ScheduleDo" >
+    insert into user_schedule (id, attachids, title, 
+      type, open, calltime
+      )
+    values (#{id,jdbcType=BIGINT}, #{attachids,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{open,jdbcType=INTEGER}, #{calltime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.ScheduleDo" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+    insert into user_schedule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="persontype != null" >
+        persontype,
+      </if>
+      <if test="attachids != null" >
+        attachids,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="open != null" >
+        open,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="quarter != null" >
+        quarter,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="day != null" >
+        day,
+      </if>
+      <if test="date != null" >
+        date ,
+      </if>
+      <if test="time != null" >
+        time ,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="persontype != null" >
+        #{persontype,jdbcType=INTEGER},
+      </if>
+      <if test="attachids != null" >
+        #{attachids,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="open != null" >
+        #{open,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="quarter != null" >
+        #{quarter,jdbcType=INTEGER},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=INTEGER},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.ScheduleDo" >
+    update user_schedule
+    <set >
+      <if test="open != null" >
+        open = #{open,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwdtz.springboot.entity.ScheduleDo" >
+    update user_schedule
+    set attachids = #{attachids,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      open = #{open,jdbcType=INTEGER},
+      calltime = #{calltime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteScheduleById">
+    delete from
+    user_schedule
+    where id = #{id}
+  </delete>
+</mapper>

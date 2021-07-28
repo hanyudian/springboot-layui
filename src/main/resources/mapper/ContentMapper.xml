@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gwdtz.springboot.dao.ContentDao">
+    <sql id="columns">
+	 a.id AS "id",
+     a.title AS "title",
+     a.serial AS "serial",
+     a.contents AS "contents",
+     a.imageurl AS "imageurl",
+     a.imagealt AS "imagealt",
+     a.flvurl AS "flvurl",
+     a.moduleid AS "moduleid",
+     a.modulepid AS "modulepid",
+     a.createtime AS "createtime",
+     a.updatetime AS "updatetime",
+     a.implementtime AS "implementtime",
+     a.publishuser AS "publishuser",
+     a.publiship AS "publiship",
+     a.visittimes AS "visittimes",
+     a.yyyymm AS "yyyymm",
+     a.deptid AS "deptid",
+     b.deptname AS "deptname",
+     a.undo AS "undo"
+	</sql>
+    <sql id="columns1">
+	 a.id AS "id",
+     a.title AS "title",
+     a.serial AS "serial",
+     a.contents AS "contents",
+     a.imageurl AS "imageurl",
+     a.imagealt AS "imagealt",
+     a.flvurl AS "flvurl",
+     a.moduleid AS "moduleid",
+     a.modulepid AS "modulepid",
+     a.createtime AS "createtime",
+     a.updatetime AS "updatetime",
+     a.implementtime AS "implementtime",
+     a.publishuser AS "publishuser",
+     a.publiship AS "publiship",
+     a.visittimes AS "visittimes",
+     a.yyyymm AS "yyyymm",
+     a.deptid AS "deptid",
+     b.deptname AS "deptname",
+     c.status AS "status",
+     a.undo AS "undo"
+	</sql>
+    <!--读取最大的序号-->
+    <select id="getMaxId" resultType="Long" >
+        select
+        (MAX(id)+1) as id
+        from user_content a
+    </select>
+    <!--user_content内容列表-->
+    <select id="getContentList" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns"/>
+        from user_content a, sys_dept b
+        <where>
+            a.deptid = #{deptid}
+            and a.deptid = b.deptid
+            <if test="title != null and title != ''">
+                and a.title like concat('%', #{title,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="serial != null and serial != ''">
+                and a.serial like concat('%', #{serial,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="createtime != null and createtime != ''">
+                and a.createtime like concat('%', #{createtime,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+        order by a.createtime desc
+    </select>
+    <!--user_content内容列表-规章查看-->
+    <select id="getContentList1" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns"/>
+        from user_content a, sys_dept b
+        <where>
+            a.modulepid = #{modulepid} AND a.deptid = b.deptid
+            <!--<if test="deptid != null and deptid != ''">-->
+                <!--and a.deptid = #{deptid}-->
+            <!--</if>-->
+            <if test="strkey != null and strkey != ''">
+                and (a.title like concat('%', #{strkey,jdbcType=VARCHAR}, '%') or a. contents like concat('%', #{strkey,jdbcType=VARCHAR}, '%') or a.serial like concat('%', #{strkey,jdbcType=VARCHAR}, '%'))
+            </if>
+        </where>
+        order by createtime desc
+        <if test="top != null">
+            limit #{top}
+        </if>
+    </select>
+    <!--user_content内容列表-会议通知-->
+    <select id="getContentList2" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns1"/>
+        from user_content a, sys_dept b, zd_contentdept c
+        <where>
+            a.modulepid = #{modulepid} AND a.deptid = b.deptid
+            <if test="deptid != null and deptid != ''">
+                and c.deptid = #{deptid}
+                and a.id = c.contentid
+            </if>
+            <if test="strkey != null and strkey != ''">
+                and (a.title like concat('%', #{strkey,jdbcType=VARCHAR}, '%') or a. contents like concat('%', #{strkey,jdbcType=VARCHAR}, '%'))
+            </if>
+        </where>
+        order by createtime desc
+        <if test="top != null">
+            limit #{top}
+        </if>
+    </select>
+    <!--user_content内容列表-待办事项-->
+    <select id="getContentList3" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns1"/>
+        from user_content a, sys_dept b, zd_contentdept c
+        <where>
+            a.modulepid = #{modulepid} AND a.deptid = b.deptid
+            <if test="deptid != null and deptid != ''">
+                and c.deptid = #{deptid}
+                and a.id = c.contentid
+            </if>
+            <if test="status != null and status != ''">
+                and c.deptid = #{deptid}
+                and a.id = c.contentid
+                and c.status = #{status}
+            </if>
+            <if test="strkey != null and strkey != ''">
+                and (a.title like concat('%', #{strkey,jdbcType=VARCHAR}, '%') or a. contents like concat('%', #{strkey,jdbcType=VARCHAR}, '%'))
+            </if>
+        </where>
+        order by createtime desc
+        <if test="top != null">
+            limit #{top}
+        </if>
+    </select>
+    <!--插入记录-->
+    <insert id="insert"  parameterType="com.gwdtz.springboot.entity.ContentDO">
+        INSERT INTO user_content(id,title,serial,contents,imageurl,createtime,updatetime,implementtime,publishuser,publiship,visittimes,yyyymm,deptid,modulepid,moduleid)
+        values (#{id},#{title},#{serial},#{contents},#{imageurl},#{createtime},CURRENT_TIMESTAMP,#{implementtime},#{publishuser},#{publiship},#{visittimes},#{yyyymm},#{deptid},#{modulepid},#{moduleid})
+    </insert>
+    <!--更新记录-->
+    <update id="update" parameterType="com.gwdtz.springboot.entity.ContentDO">
+        update user_content a
+        <set>
+            <if test="createtime != null and createtime != ''">
+                a.createtime=#{createtime},
+            </if>
+            <if test="implementtime != null and implementtime != ''">
+                a.implementtime=#{implementtime},
+            </if>
+            <if test="title != null and title != ''">
+                a.title=#{title},
+            </if>
+            <if test="serial != null and serial != ''">
+                a.serial=#{serial},
+            </if>
+            <if test="contents != null and contents != ''">
+                a.contents = #{contents},
+            </if>
+            a.imageurl =#{imageurl},
+            a.updatetime =CURRENT_TIMESTAMP,
+            a.moduleid = 0
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where a.id = #{id}
+    </update>
+    <!--删除记录-->
+    <delete id="deleteById">
+        delete from user_content where id = #{contentId}
+    </delete>
+    <!--删除上报记录-->
+    <delete id="deleteByModuleid">
+        delete from user_content where moduleid = #{moduleid}
+    </delete>
+    <!--通过id读取内容列表-->
+    <select id="selectContentById" resultType="com.gwdtz.springboot.entity.ContentDO">
+        select
+        <include refid="columns"/>
+        from user_content a, sys_dept b
+        where a.id = #{contentId} AND a.deptid = b.deptid
+        <!--<where>-->
+            <!--<if test="contentId != null and contentId != ''">-->
+                <!--AND a.id = #{contentId}-->
+            <!--</if>-->
+        <!--</where>-->
+    </select>
+    <!--通过moduleid,deptid读取内容列表-->
+    <select id="selectContentByModuleid" resultType="com.gwdtz.springboot.entity.ContentDO">
+        select
+        <include refid="columns"/>
+        from user_content a, sys_dept b
+        where a.moduleid = #{moduleid} AND a.deptid = #{deptid} AND a.deptid = b.deptid
+        <!--<where>-->
+        <!--<if test="contentId != null and contentId != ''">-->
+        <!--AND a.id = #{contentId}-->
+        <!--</if>-->
+        <!--</where>-->
+    </select>
+    <!--批量添加附件列表-->
+    <insert id="addBatchContentAttach" parameterType="com.gwdtz.springboot.entity.ContentAttachDO">
+        insert into user_content_attach(
+        contentid,attachrealname,attachrelativeurl,attachtype,attachsize,createtime,updatetime
+        )
+        <foreach collection="contentAttaches" item="b" open=" values" separator=",">
+            (#{b.contentid},#{b.attachrealname},#{b.attachrelativeurl},#{b.attachtype},#{b.attachsize},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+        </foreach>
+    </insert>
+    <!--user_content_attach附件列表-->
+    <select id="getContentAttachList" resultType="com.gwdtz.springboot.entity.ContentAttach" parameterType="String">
+        select
+        a.*
+        from user_content_attach a
+        where a.contentid = #{contentid}
+        <!--<where>-->
+            <!--<if test="contentid != null and contentid != ''">-->
+                <!--AND a.contentid = #{contentid}-->
+            <!--</if>-->
+        <!--</where>-->
+    </select>
+    <!--删除附件-->
+    <delete id="deleteByAttachId">
+        delete from user_content_attach where id = #{attachid}
+    </delete>
+    <!--更新时先删除某contentid对应的附件-->
+    <delete id="deleteAttachByContentId">
+        delete from user_content_attach where contentid = #{contentid}
+    </delete>
+
+    <select id="getContentListByTitle" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns"/>
+        from user_content a, sys_dept b
+        <where>
+            <if test="deptid != null and deptid != ''">
+                and a.deptid = #{deptid}
+            </if>
+            <if test="title != null and title != ''">
+                and a.title like concat('%', #{title,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="modulepid != null and modulepid != ''">
+                and a.modulepid = #{modulepid}
+            </if>
+        </where>
+        order by createtime desc
+        <if test="top != null">
+            LIMIT #{top}
+        </if>
+    </select>
+
+    <select id="getModuleInfoByContentId" resultType="com.gwdtz.springboot.entity.ModuleDO">
+        select sm.*
+        from user_content uc
+        left join sys_module sm
+        on uc.modulepid = sm.id
+        where uc.id = #{id}
+    </select>
+
+    <!--前台使用访问次数-->
+    <update id="updatevisittimes" parameterType="java.lang.Long">
+        update user_content a
+        <set>
+            <if test="contentId != null and contentId != ''">
+                visittimes=visittimes+1
+            </if>
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where id = #{contentId}
+    </update>
+
+    <!--user_content内容列表-->
+    <select id="getContentImgList" resultType="com.gwdtz.springboot.entity.ContentDO" >
+        select
+        <include refid="columns"/>
+        from user_content a
+        <where>
+            a.modulepid = #{modulepid} and (imageurl IS NOT NULL and imageurl!='')
+            <if test="deptid != null and deptid != ''">
+                and a.deptid = #{deptid}
+            </if>
+        </where>
+        order by createtime desc
+        <if test="top != null">
+            limit #{top}
+        </if>
+    </select>
+
+    <update id="updateUndo1">
+        update user_content a
+        <set>
+            a.undo = #{undo}
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where a.id = #{contentid}
+    </update>
+
+</mapper>

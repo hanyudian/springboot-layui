@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwdtz.springboot.dao.DeptDao" >
+  <resultMap id="BaseResultMap" type="com.gwdtz.springboot.entity.DeptDO" >
+    <id column="deptid" property="deptid" jdbcType="BIGINT" />
+    <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+    <result column="deptlevelcode" property="deptlevelcode" jdbcType="VARCHAR" />
+    <result column="deptcode" property="deptcode" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="sortno" property="sortno" jdbcType="INTEGER" />
+    <result column="ischild" property="ischild" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    deptid, deptname, deptlevelcode, deptcode, pid, sortno, ischild, status, createtime, updatetime, deleted
+  </sql>
+
+  <!-- 数据字典 -->
+  <select id="getAll" resultType="com.gwdtz.springboot.entity.DeptDO">
+    select *
+    from sys_dept
+    where status = 1
+    and deleted = 1
+  </select>
+
+  <!-- 返回数根节点 -->
+  <select id="getTreeRoot" resultType="com.gwdtz.springboot.entity.DeptTree" parameterType="java.lang.Long">
+    select *
+    from sys_dept
+    where deptid = #{deptid}
+    and status = 1
+    and deleted = 1
+  </select>
+
+  <!-- 部门树结构 -->
+  <select id="getByPidTreeCheck" resultType="com.gwdtz.springboot.entity.DeptTree" parameterType="java.lang.Long">
+    select *
+    from sys_dept
+    where pid = #{pid}
+    and status = 1
+    and deleted = 1
+  </select>
+
+  <select id="getByPidTreeCheckgy" resultType="com.gwdtz.springboot.entity.DeptTreeDO" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "name"
+    from sys_dept a
+    <where>
+      AND a.pid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+
+  <select id="getByDeptCheck" resultType="com.gwdtz.springboot.entity.DeptTreeDO" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "name"
+    from sys_dept a
+    <where>
+      and a.deptid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+
+
+    <select id="getByPidTreeCheckgySix" resultType="com.gwdtz.springboot.entity.DeptTreeDO" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "name"
+    from sys_dept a
+    <where>
+      AND a.pid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+      <if test="num != null" >
+        and length(a.deptcode) &lt;= #{num}
+      </if>
+    </where>
+  </select>
+
+  <select id="getByDeptCheckSix" resultType="com.gwdtz.springboot.entity.DeptTreeDO" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "name"
+    from sys_dept a
+    <where>
+      and a.deptid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+
+  <!-- 获取指定的部门 -->
+  <select id="getDepartmentListByDeptId" resultType="com.gwdtz.springboot.entity.DeptDO" parameterType="java.lang.Long">
+    select *
+    from sys_dept
+    where pid = #{deptid}
+    and status = 1
+    and deleted = 1
+  </select>
+
+  <select id="getDepartmentListByDeptLevelCode" resultType="com.gwdtz.springboot.entity.DeptDO" parameterType="java.lang.String">
+    select
+        deptid,
+        deptname
+    from sys_dept
+    where deptlevelcode like concat(#{deptlevelcode,jdbcType=VARCHAR},'__')
+    and deptlevelcode != #{deptlevelcode,jdbcType=VARCHAR}
+    and status = 1
+    and deleted = 1
+  </select>
+
+  <!-- 获取指定的部门 -->
+  <select id="selectDeptById" resultType="com.gwdtz.springboot.entity.DeptDO" parameterType="java.lang.Long">
+    select *
+    from sys_dept
+    where deptid = #{deptid}
+  </select>
+
+
+  <!-- 根据deptid获取pid -->
+  <select id="getPid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+      select pid from sys_dept where deptid =#{deptid}
+  </select>
+
+  <!-- 根据deptid获取ischild -->
+  <select id="getIschild" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+      select ischild from sys_dept where deptid =#{deptid}
+  </select>
+
+  <!-- 根据deptid获取deptname -->
+  <select id="getDeptName" resultType="java.lang.String" parameterType="java.lang.Integer">
+      select deptname from sys_dept where deptid =#{deptid}
+  </select>
+
+  <!-- 根据pid获取最大sortno -->
+  <select id="getMaxSortno" resultType="java.lang.String" parameterType="java.lang.Integer">
+      select max(sortno) from sys_dept where pid=#{pid}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.DeptDO" >
+      insert into sys_dept
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+
+        <if test="deptname != null" >
+          deptname,
+        </if>
+        <if test="deptlevelcode != null" >
+          deptlevelcode,
+        </if>
+        <if test="deptcode != null" >
+          deptcode,
+        </if>
+        <if test="pid != null" >
+          pid,
+        </if>
+        <if test="sortno != null" >
+          sortno,
+        </if>
+        <if test="ischild != null" >
+          ischild,
+        </if>
+        <if test="status != null" >
+          status,
+        </if>
+        <if test="createtime != null" >
+          createtime,
+        </if>
+        <if test="updatetime != null" >
+          updatetime,
+        </if>
+        <if test="deleted != null" >
+          deleted,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+        <if test="deptname != null" >
+          #{deptname,jdbcType=VARCHAR},
+        </if>
+        <if test="deptlevelcode != null" >
+          #{deptlevelcode,jdbcType=VARCHAR},
+        </if>
+        <if test="deptcode != null" >
+          #{deptcode,jdbcType=VARCHAR},
+        </if>
+        <if test="pid != null" >
+          #{pid,jdbcType=BIGINT},
+        </if>
+        <if test="sortno != null" >
+          #{sortno,jdbcType=INTEGER},
+        </if>
+        <if test="ischild != null" >
+          #{ischild,jdbcType=INTEGER},
+        </if>
+        <if test="status != null" >
+          #{status,jdbcType=INTEGER},
+        </if>
+        <if test="createtime != null" >
+          #{createtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updatetime != null" >
+          #{updatetime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deleted != null" >
+          #{deleted,jdbcType=INTEGER},
+        </if>
+      </trim>
+ </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.DeptDO" >
+      update sys_dept
+      <set >
+        <if test="deptname != null" >
+          deptname = #{deptname,jdbcType=VARCHAR},
+        </if>
+        <if test="deptlevelcode != null" >
+          deptlevelcode = #{deptlevelcode,jdbcType=VARCHAR},
+        </if>
+        <if test="deptcode != null" >
+          deptcode = #{deptcode,jdbcType=VARCHAR},
+        </if>
+        <if test="pid != null" >
+          pid = #{pid,jdbcType=BIGINT},
+        </if>
+        <if test="sortno != null" >
+          sortno = #{sortno,jdbcType=INTEGER},
+        </if>
+        <if test="ischild != null" >
+          ischild = #{ischild,jdbcType=INTEGER},
+        </if>
+        <if test="status != null" >
+          status = #{status,jdbcType=INTEGER},
+        </if>
+        <if test="createtime != null" >
+          createtime = #{createtime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updatetime != null" >
+          updatetime = #{updatetime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="deleted != null" >
+          deleted = #{deleted,jdbcType=INTEGER},
+        </if>
+      </set>
+      where deptid = #{deptid,jdbcType=BIGINT}
+    </update>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_dept
+    where deptid = #{deptid,jdbcType=BIGINT}
+  </delete>
+
+  <select id="getAllNodesIds" resultType="java.lang.String" parameterType="java.lang.String">
+      select deptid from sys_dept where pid =#{id,jdbcType=VARCHAR}
+    </select>
+
+  <delete id="deleteParentNodesByAllIds">
+    delete from sys_dept
+    where deptid IN
+    <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </delete>
+
+  <update id="updateParentNodesByAllIds"  >
+      update sys_dept
+      set deleted = 0
+      where deptid IN
+      <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+        #{item}
+      </foreach>
+   </update>
+
+
+  <update id="updateIschild" parameterType="com.gwdtz.springboot.entity.DeptDO" >
+      update sys_dept
+      set ischild = #{ischild,jdbcType=INTEGER}
+      where deptid = #{deptid,jdbcType=BIGINT}
+    </update>
+
+  <update id="updateDeleted" parameterType="java.lang.Integer" >
+      update sys_dept
+      set deleted = 0
+      where deptid = #{deptid}
+   </update>
+
+
+  <!-- 部门树结构 -->
+  <select id="getDeptList" resultType="com.gwdtz.springboot.entity.DeptTree">
+    select *
+    from sys_dept
+    where pid = #{pid}
+    and status = 1
+    and deleted = 1
+    <if test="top != null">
+      limit #{top}
+    </if>
+  </select>
+
+  <select id="getbypidfrontnav" resultType="com.gwdtz.springboot.entity.DeptTreeDO" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "name"
+    from sys_dept a
+    <where>
+      and LENGTH(a.deptlevelcode)&lt;=6
+      AND a.pid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+
+
+  <select id="getDeptOneSelRoot" resultType="com.gwdtz.springboot.entity.layui.DeptOneSel" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "title"
+    from sys_dept a
+    <where>
+      and a.deptid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+
+  <select id="getDeptOneSelChild" resultType="com.gwdtz.springboot.entity.layui.DeptOneSel" parameterType="java.lang.Long">
+    select
+    a.deptid AS "id",
+    a.pid AS "pid",
+    a.deptname AS "title"
+    from sys_dept a
+    <where>
+      AND a.pid = #{id}
+      and a.status = 1
+      and a.deleted = 1
+    </where>
+  </select>
+</mapper>

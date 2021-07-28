@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gwdtz.springboot.dao.UserDao">
+    <sql id="columns">
+        ifnull(a.userid,"") as userid,
+        ifnull(a.username,"") as username,
+        ifnull(a.password,"") as password,
+        ifnull(a.deptid,"") as deptid,
+        ifnull(a.realname,"") as realname,
+        ifnull(a.phone,"") as phone,
+        ifnull(a.roleid,"") as roleid
+	</sql>
+    <sql id="columns1">
+        ifnull(a.userid,"") as userid,
+        ifnull(a.username,"") as username,
+        ifnull(a.password,"") as password,
+        ifnull(a.deptid,"") as deptid,
+        ifnull(a.realname,"") as realname,
+        ifnull(a.phone,"") as phone,
+        ifnull(a.roleid,"") as roleid,
+        ifnull(c.name,"") as rolename,
+        ifnull(b.deptname,"") as deptname
+	</sql>
+    <select id="findByName" resultType="com.gwdtz.springboot.entity.UserLoginDo" parameterType="String" >
+        select
+        <include refid="columns"/>
+        from sys_user a
+        <where>
+            <if test="username != null and username != ''">
+                AND a.username = #{username}
+            </if>
+        </where>
+    </select>
+    <select id="getUserName" resultType="com.gwdtz.springboot.entity.UserDO" parameterType="String">
+        select
+        <include refid="columns"/>
+        from sys_user a
+        <where>
+            <if test="username != null and username != ''">
+                AND a.username = #{username}
+            </if>
+        </where>
+    </select>
+    <select id="getUserList" resultType="com.gwdtz.springboot.entity.UserDO" parameterType="String">
+        select
+        <include refid="columns1"/>
+        from sys_user a, sys_dept b,sys_role c
+        <where>
+            a.deptid = b.deptid and a.roleid=c.id
+            <if test="username != null and username != ''">
+                <if test='username != "admin" '>
+                    <if test="deptlevelcode != null and deptlevelcode != ''">
+                        AND b.deptlevelcode like concat('',#{deptlevelcode},'%')
+                    </if>
+                </if>
+            </if>
+            <if test="name != null and name != ''">
+                AND a.username like concat('%',#{name},'%')
+            </if>
+            <if test="deptname != null and deptname != ''">
+                AND b.deptname like concat('%',#{deptname},'%')
+            </if>
+            <if test="rolename != null and rolename != ''">
+                AND c.name like concat('%',#{rolename},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getUserList1" resultType="com.gwdtz.springboot.entity.UserDO" parameterType="String">
+        select
+        <include refid="columns1"/>
+        from sys_user a, sys_dept b,sys_role c
+        <where>
+            a.deptid = b.deptid and a.roleid=c.id
+            <if test="deptid != null and deptid != ''">
+                AND a.deptid = #{deptid}
+            </if>
+        </where>
+    </select>
+    <!--插入记录-->
+    <insert id="insert"  parameterType="com.gwdtz.springboot.entity.UserDO">
+        INSERT INTO sys_user(username,password,deptid,realname,phone,roleid,status,createtime,deleted)
+        values (#{username},#{password},#{deptid},#{realname},#{phone},#{roleid},1,CURRENT_TIMESTAMP,1)
+    </insert>
+    <!--更新记录-->
+    <update id="update" parameterType="com.gwdtz.springboot.entity.UserDO">
+        update sys_user
+        <set>
+<!--            <if test="username != null and username != ''">-->
+<!--                username=#{username},-->
+<!--            </if>-->
+            <if test="realname != null and realname != ''">
+                realname = #{realname},
+            </if>
+            <!--<if test="phone != null and phone != ''">-->
+                phone = #{phone},
+            <!--</if>-->
+            <if test="roleid != null and roleid != ''">
+                roleid = #{roleid},
+            </if>
+            status = 1,
+            updatetime = CURRENT_TIMESTAMP,
+            deleted = 1,
+            <!--<if test="deptid != null">-->
+            <!--deptid = #{deptid},-->
+            <!--</if>-->
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where userid = #{userid}
+    </update>
+    <!--删除记录-->
+    <delete id="deleteByUserid">
+        delete from sys_user where userid = #{userUserid}
+    </delete>
+
+    <select id="selectUserByUserid" resultType="com.gwdtz.springboot.entity.UserDO">
+        select
+        <include refid="columns"/>
+        from sys_user a
+        <where>
+            <if test="userUserid != null and userUserid != ''">
+                AND a.userid = #{userUserid}
+            </if>
+        </where>
+    </select>
+
+    <!--更新记录-->
+    <update id="updatePsw" parameterType="com.gwdtz.springboot.entity.UserDO">
+        update sys_user
+        <set>
+            <if test="password != null and password != ''">
+                password=#{password},
+            </if>
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        <where>
+            <if test="username != null and username != ''">
+                and username = #{username}
+            </if>
+        </where>
+    </update>
+
+    <update id="passwordReset" parameterType="com.gwdtz.springboot.entity.UserDO">
+        update sys_user
+        set password = #{password}
+        where userid = #{userid} and username = #{username}
+    </update>
+
+</mapper>

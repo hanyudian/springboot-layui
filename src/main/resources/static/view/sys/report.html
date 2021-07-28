@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="../../css/index.css" rel="stylesheet">
+		<link href="../../css/page.css" rel="stylesheet">
+		<title></title>
+	</head>
+
+	<body>
+		<div class="mainbody">
+			<div class="formbody">
+				<form id="infoForm" name="infoForm">
+					<div class="modal-body" style="background-color: white;">
+						<!--<input id="id" name="id" type="hidden">-->
+						<div class="form-group">
+							<label class="control-label">落实时间：</label>
+							<div class="col-sm-6">
+								<input id="moduleid" name="moduleid" type="hidden">
+								<input id="modulepid" name="modulepid" type="hidden">
+								<input id="title" name="title" class="form-control" type="hidden">
+								<input class="form-control" id="createtime" name="createtime" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+								<!--<label class="laydate-icon"></label>-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">落实情况：</label>
+							<div  class="col-sm-6">
+								<textarea id="contents" name="contents" style="visibility: hidden;"></textarea>
+								<span class="help-block"><i class="fa fa-info-circle"></i> </span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">上传图片：</label>
+							<div class="col-sm-6">
+								<input style="border-radius: 5px;width:500px;height: 30px" id="addpicurl" name="addpicurl" type="file" accept=".jpg,.jpeg,.png" />
+								<span class="help-block"><i class="fa-info-circle"></i>
+									<input style="margin-left: 5px" id="upFileBtn" type="button" value="上传图片" onclick="upload()"/>
+									<input style="margin-left: 5px" id="deteleBtn" type="button" value="清除图片" onclick="cleanup()"/>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">图片路径：</label>
+							<div class="col-sm-6">
+								<input id="imageurl" name="imageurl" class="form-control" type="text" value=""/><br>
+								<input id="imagealt" name="imagealt" type="hidden" value="" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">上传附件：</label>
+							<div class="col-sm-6">
+								<input style="border-radius: 5px;width:500px;height: 30px" id="adduploadfiles" name="adduploadfiles" type="file" value="请选择文件" multiple="" />
+								<span class="help-block"><i class="fa-info-circle"></i>
+									<input style="margin-left: 5px" id="upMutiFileBtn" type="button" value="上传附件" onclick="uploadMutiFile()"/>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">附件列表：</label>
+							<div class="col-sm-6">
+								<table id="tb_users" class="tablelist">
+									<thead>
+									<tr>
+										<th>文件名</th>
+										<th>文件类型</th>
+										<th>文件大小</th>
+										<th>附件查看</th>
+									</tr>
+									</thead>
+									<tbody id="infoList">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div id="diaplaypic" name="diaplaypic">
+						<input style="margin-left: 5px; width: 100%;" id="jsonArray" name="jsonArray" type="hidden" value=""/>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" value="提交" id="btn-primary" class="btn-primary" />
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="../../statics/js/common/jquery-1.10.2.min.js"></script>
+		<script src="../../statics/js/common/JQuery.XDomainRequest.min.js"></script>
+		<script src="../../statics/js/common/jquery.cookie.js"></script>
+		<script src="../../statics/js/common/common.js"></script>
+		
+
+		<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.form.min.js"></script>
+		<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.validate.js"></script>
+		<script src="../../statics/js/public/jquery-validation/1.14.0/messages_zh.js"></script>
+		<script src="../../statics/js/public/plugins/layer/layer/layer.js"></script>
+		<script src="../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+		
+		<script src="../../statics/js/public/plugins/kindeditor/kindeditor-all.js"></script>
+		<script src="../../statics/js/public/plugins/kindeditor/plugins/code/prettify.js"></script>
+
+		<script src="../../statics/js/public/ajaxfileupload.js"></script>
+
+		<script src="../../statics/js/static/sys/report.js"></script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwdtz.springboot.dao.ScheduleDetailDao" >
+  <resultMap id="BaseResultMap" type="com.gwdtz.springboot.entity.ScheduleDetailDo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="scheduleid" property="scheduleid" jdbcType="BIGINT" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="time" property="time" jdbcType="TIME" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, scheduleid, today, flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_schedule_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getScheduleDetailByScheduleId" resultType="com.gwdtz.springboot.entity.ScheduleDetailDo">
+    select *
+    from user_schedule_detail
+    where scheduleid = #{id}
+    order by date desc
+    limit 1
+  </select>
+  <select id="getUnFinishSchedule" resultType="com.gwdtz.springboot.entity.ScheduleDetailDo">
+    select *
+    from user_schedule_detail
+    where scheduleid = #{id}
+    and flag = 0
+    and date <![CDATA[ <= ]]> #{date}
+    order by date desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_schedule_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.gwdtz.springboot.entity.ScheduleDetailDo" >
+    insert into user_schedule_detail (id, scheduleid, today, 
+      flag)
+    values (#{id,jdbcType=BIGINT}, #{scheduleid,jdbcType=BIGINT}, #{today,jdbcType=TIMESTAMP}, 
+      #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.ScheduleDetailDo" >
+    insert into user_schedule_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scheduleid != null" >
+        scheduleid,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scheduleid != null" >
+        #{scheduleid,jdbcType=BIGINT},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.ScheduleDetailDo" >
+    update user_schedule_detail
+    <set >
+      <if test="scheduleid != null" >
+        scheduleid = #{scheduleid,jdbcType=BIGINT},
+      </if>
+      <if test="today != null" >
+        today = #{today,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gwdtz.springboot.entity.ScheduleDetailDo" >
+    update user_schedule_detail
+    set scheduleid = #{scheduleid,jdbcType=BIGINT},
+      today = #{today,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteScheduleDetailById">
+    delete from
+    user_schedule_detail
+    where id = #{id}
+  </delete>
+  <delete id="deleteScheduleDetailByScheduleId">
+    delete from
+    user_schedule_detail
+    where scheduleid = #{scheduleId}
+  </delete>
+  <update id="updateScheduleFinishFlag">
+    update user_schedule_detail
+    set flag = 1
+    where id = #{id}
+  </update>
+  <select id="getScheduleDetailById" resultType="com.gwdtz.springboot.entity.ScheduleDetailDo">
+    select *
+    from user_schedule_detail
+    where id = #{id}
+  </select>
+  <select id="getUnFinishScheduleCount" resultType="integer">
+    select count(*)
+    from user_schedule_detail
+    where scheduleid = #{id}
+    and flag = 0
+    and date <![CDATA[ <= ]]> #{date}
+  </select>
+  <select id="getUnFinishScheduleCountByScheduleIds" resultType="integer">
+    select count(*)
+    from user_schedule_detail
+    where flag = 0
+    and date <![CDATA[ <= ]]> #{date}
+    and scheduleid in
+    <foreach collection="scheduleIds" item="scheduleId" index="index" open="(" close=")" separator=",">
+      #{scheduleId}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gwdtz.springboot.dao.ContentDeptDao">
+    <sql id="columns">
+		a.id AS "id",
+		a.contentid AS "contentid",
+		a.deptid AS "deptid"
+        a.status AS "status",
+        a.createtime AS "createtime",
+		a.updatetime AS "updatetime",
+		a.deleted AS "deleted",
+		a.complete AS "complete",
+		b.deptname AS "deptname"
+
+	</sql>
+    <!--删除记录-->
+    <delete id="deleteById">
+        delete from zd_contentdept where contentid = #{contentid}
+    </delete>
+    <delete id="deleteByContentid">
+        delete from zd_contentdept where contentid = #{contentid}
+    </delete>
+
+    <delete id="deleteByDeptId">
+        delete from zd_contentdept where deptid = #{deptid}
+    </delete>
+
+    <insert id="insert">
+        insert into zd_contentdept(contentid,deptid,status,createtime,deleted)
+        values(#{contentid},#{deptid},1,CURRENT_TIMESTAMP,1)
+    </insert>
+    <select id="getContentDeptList"  resultType="com.gwdtz.springboot.entity.ContentDeptDO" parameterType="String">
+        select *
+        from zd_contentdept a, sys_dept b
+        <where>
+        a.deptid = b.deptid
+            <if test="contentid != null and contentid != ''">
+                AND a.contentid = #{contentid}
+            </if>
+        </where>
+    </select>
+    <select id="selectDeptById" resultType="Integer">
+        select
+        a.deptid
+        from zd_contentdept a
+        where a.contentid = #{contentid}
+    </select>
+    <select id="selectStatusById" resultType="Integer">
+        select
+        a.status
+        from zd_contentdept a
+        where a.contentid = #{contentid}
+    </select>
+    <select id="selectCompleteByContentid" resultType="com.gwdtz.springboot.entity.ContentDeptDO">
+        select *
+        from zd_contentdept a
+        where a.contentid = #{contentid} AND a.deptid = #{deptid}
+    </select>
+    <!--更新记录-->
+    <update id="update" parameterType="com.gwdtz.springboot.entity.ContentDeptDO">
+        update zd_contentdept
+        <set>
+            status = 3,
+            updatetime = CURRENT_TIMESTAMP,
+            deleted = 1,
+
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where contentid = #{contentid} AND deptid = #{deptid}
+    </update>
+    <update id="update5" parameterType="com.gwdtz.springboot.entity.ContentDeptDO">
+        update zd_contentdept
+        <set>
+            status = 5,
+            updatetime = CURRENT_TIMESTAMP,
+            deleted = 1,
+            <if test="complete != null and complete != ''">
+                complete = #{complete,jdbcType=VARCHAR}
+            </if>
+
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where contentid = #{contentid} AND deptid = #{deptid}
+    </update>
+    <update id="update2" parameterType="com.gwdtz.springboot.entity.ContentDeptDO">
+        update zd_contentdept
+        <set>
+            status = 2,
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where contentid = #{contentid} AND deptid = #{deptid}
+    </update>
+
+    <!--更新记录-->
+    <update id="updateRollback" parameterType="com.gwdtz.springboot.entity.ContentDeptDO">
+        update zd_contentdept
+        <set>
+            <if test="complete != null and complete != ''">
+                complete=#{complete},
+            </if>
+            status = 4,
+            updatetime = CURRENT_TIMESTAMP,
+            deleted = 1,
+
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where contentid = #{contentid} AND deptid = #{deptid}
+    </update>
+
+    <!--更新记录status5-->
+    <update id="updatestatus5" parameterType="com.gwdtz.springboot.entity.ContentDeptDO">
+        update zd_contentdept
+        <set>
+            status = 5,
+            updatetime = CURRENT_TIMESTAMP,
+            deleted = 1,
+
+        </set>
+        <!--<where>相当于where语句，会自动删除下面跟着的第一个and，只有后面包含有if等语句才需要<>符号包起来-->
+        where id = #{id}
+    </update>
+
+    <select id="selectContentDeptById" resultType="com.gwdtz.springboot.entity.ContentDeptDO">
+        select *
+        from zd_contentdept
+        where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../../css/index.css" rel="stylesheet">
+    <link href="../../css/page.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
+    <title>Title</title>
+</head>
+<body>
+<div class="mainbody">
+    <div class="formbody">
+        <form  id="infoForm" name="infoForm">
+            <div class="modal-body" style="background-color: white;">
+                <input id="id" name="id" type="hidden" value="">
+                <div class="form-group">
+                    <label class="control-label">角色名称：</label>
+                    <div class="col-sm-6">
+                        <input id="name" name="name" class="form-control" type="text">
+                        <span class="help-block"> <i class="fa fa-info-circle"></i> 必填</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">描述：</label>
+                    <div class="col-sm-6">
+                        <input id="description" name="description" class="form-control" type="text" >
+                        <span class="help-block"> <i class="fa fa-info-circle"></i> 管理员用户/浏览用户</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input  type="submit" value="提交" class="btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="../../statics/js/common/jquery-1.10.2.min.js"></script>
+<script src="../../statics/js/common/JQuery.XDomainRequest.min.js"></script>
+<script src="../../statics/js/common/jquery.cookie.js"></script>
+<script src="../../statics/js/common/common.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.form.min.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/jquery.validate.js"></script>
+<script src="../../statics/js/public/jquery-validation/1.14.0/messages_zh.js"></script>
+<script src="../../statics/js/public/plugins/layer/layer/layer.js"></script>
+<script src="../../statics/js/public/plugins/layer/laydate/laydate.js"></script>
+<script src="../../statics/js/static/sys/roleadd.js"></script>
+</body>
+</html>

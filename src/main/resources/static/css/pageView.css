@@ -1,0 +1,92 @@
+/************* PagerView **************/
+.PagerView{
+	font-size: 12px;
+	font-family: tahoma, arial;
+	color: #676a6c;
+	text-align: center;
+	padding-bottom: 4px;
+	height:28px;
+	line-height: 28px;
+}
+.PagerView span{
+	color: #999;
+	margin: 0 1px;
+	padding: 3px 6px;
+	border: 1px solid #ccc;
+}
+.PagerView span.on{
+	color: #737577;
+	font-weight: bold;
+	border: 1px solid #dddddd;
+	background:#f4f4f4;
+}
+.PagerView a{
+	color: #00f;
+	text-decoration: none;
+}
+.PagerView a span{
+	/*color: #33f;*/
+	color: #676a6c;
+	border: 1px solid #dddddd;
+}
+.gotoPage{
+	border-top:solid 1px #a7b5bc; border-left:solid 1px #a7b5bc; border-right:solid 1px #ced9df; border-bottom:solid 1px #ced9df; text-indent:10px;
+}
+/************* TableView **************/
+.TableView .datagrid_meta{
+	line-height: 22px;
+}
+.TableView .datagrid_meta .title{
+	font-size: 13px;
+	font-weight: bold;
+}
+.TableView .datagrid_meta .filter input{
+	margin: 0 4px;
+	padding: 1px;
+	border: 1px solid #ccc;
+}
+.TableView table{
+	font-size: 12px;
+	border-collapse: collapse;
+}
+.TableView div.datagrid_div{
+	border: 1px solid #999;
+}
+.TableView table.datagrid{
+	border-collapse: separate;
+	width: 100%;
+}
+.TableView table.datagrid th{
+	text-align: left;
+	background: #ddd;
+	padding: 1px;
+}
+.TableView table.datagrid td{
+	padding: 2px;
+}
+.TableView table.datagrid tr.odd{
+    background: #fff;
+}
+.TableView table.datagrid tr.even{
+    background: #eee;
+}
+.TableView table.datagrid tr.marked{
+    background: #ee9;
+}
+.TableView table.datagrid tr:hover,
+.TableView table.datagrid tr.hover{
+    background: #9cf;
+}
+
+/************* SelectorView **************/
+.SelectorView .selector_table{
+	width: 100%;
+}
+.SelectorView .selector_table .src,
+.SelectorView .selector_table .dst{
+	width: 50%;
+}
+.SelectorView .selector_table table.datagrid tr:hover,
+.SelectorView .selector_table table.datagrid tr.hover{
+	cursor: pointer;
+}

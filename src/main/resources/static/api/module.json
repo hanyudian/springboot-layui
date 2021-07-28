@@ -1,0 +1,263 @@
+{
+  "code": 200,
+  "data": {
+    "list": [
+      {
+        "id": 73,
+        "name": "主栏目维护",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 74,
+            "name": "生产信息",
+            "pid": 73,
+            "manageurl": "view/frontmanager/ContentManager.html?id=74",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 75,
+            "name": "工作动态",
+            "pid": 73,
+            "manageurl": "view/frontmanager/ContentManager.html?id=75",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 76,
+            "name": "信息短讯",
+            "pid": 73,
+            "manageurl": "view/frontmanager/ContentManager.html?id=76",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 77,
+            "name": "通知公告",
+            "pid": 73,
+            "manageurl": "view/frontmanager/ContentManager.html?id=77",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 78,
+        "name": "其他栏目维护",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 79,
+            "name": "科室管理",
+            "pid": 78,
+            "manageurl": "view/frontmanager/ContentManager.html?id=79",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 80,
+            "name": "工作总结",
+            "pid": 78,
+            "manageurl": "view/frontmanager/ContentManager.html?id=80",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 81,
+            "name": "电话号码",
+            "pid": 78,
+            "manageurl": "view/frontmanager/PhoneNumber.html",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 102,
+            "name": "常用链接",
+            "pid": 78,
+            "manageurl": "view/frontmanager/frelinkmanager.html",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 211,
+            "name": "员工风采",
+            "pid": 78,
+            "manageurl": "view/frontmanager/ContentManager.html?id=211",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 82,
+        "name": "中心工作",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 83,
+            "name": "中心工作",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=83",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 84,
+            "name": "每周交班",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=84",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 85,
+            "name": "表彰奖励",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=85",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 86,
+            "name": "技术培训",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=86",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 87,
+            "name": "述职报告",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=87",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 88,
+            "name": "工作总结",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=88",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 89,
+            "name": "工会组织",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=89",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 90,
+            "name": "技术支持",
+            "pid": 82,
+            "manageurl": "view/frontmanager/ContentManager.html?id=90",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 91,
+        "name": "规章制度",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 92,
+            "name": "技术规章",
+            "pid": 91,
+            "manageurl": "view/frontmanager/ContentManager.html?id=92",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 93,
+            "name": "法律法规",
+            "pid": 91,
+            "manageurl": "view/frontmanager/ContentManager.html?id=93",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 94,
+            "name": "技术奖励",
+            "pid": 91,
+            "manageurl": "view/frontmanager/ContentManager.html?id=94",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 95,
+        "name": "支部生活",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 96,
+            "name": "支部工作",
+            "pid": 95,
+            "manageurl": "view/frontmanager/ContentManager.html?id=96",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 97,
+            "name": "思想教育",
+            "pid": 95,
+            "manageurl": "view/frontmanager/ContentManager.html?id=97",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 98,
+            "name": "中心组学习",
+            "pid": 95,
+            "manageurl": "view/frontmanager/ContentManager.html?id=98",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      },
+      {
+        "id": 99,
+        "name": "基础信息维护",
+        "pid": 72,
+        "manageurl": "main.html",
+        "ischild": 1,
+        "children": [
+          {
+            "id": 100,
+            "name": "部门维护",
+            "pid": 99,
+            "manageurl": "view/sysmanager/deptmanager.html",
+            "ischild": 0,
+            "children": null
+          },
+          {
+            "id": 101,
+            "name": "用户维护",
+            "pid": 99,
+            "manageurl": "view/sysmanager/usermanager.html",
+            "ischild": 0,
+            "children": null
+          }
+        ]
+      }
+    ],
+    "username": "xxjss"
+  },
+  "msg": "ok"
+}

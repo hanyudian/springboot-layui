@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gwdtz.springboot.dao.SafetyDayDao" >
+  <resultMap id="BaseResultMap" type="com.gwdtz.springboot.entity.SafetyDayDo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="deptid" property="deptid" jdbcType="BIGINT" />
+    <result column="deptname" property="deptname" jdbcType="VARCHAR" />
+    <result column="updateflag" property="updateflag" jdbcType="TIMESTAMP" />
+    <result column="aday" property="aday" jdbcType="BIGINT" />
+    <result column="bday" property="bday" jdbcType="BIGINT" />
+    <result column="cday" property="cday" jdbcType="BIGINT" />
+    <result column="dday" property="dday" jdbcType="BIGINT" />
+<!--    <result column="acreatetime" property="acreatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="bcreatetime" property="bcreatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="ccreatetime" property="ccreatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="dcreatetime" property="dcreatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="aupdatetime" property="aupdatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="bupdatetime" property="bupdatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="cupdatetime" property="cupdatetime" jdbcType="TIMESTAMP" />-->
+<!--    <result column="dupdatetime" property="dupdatetime" jdbcType="TIMESTAMP" />-->
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, deptid, deptname, updateflag, aday, bday, cday, dday, status, deleted
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_safety_day
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="existToday" resultType="com.gwdtz.springboot.entity.SafetyDayDo">
+    select *
+    from user_safety_day
+    where deptid = #{deptid}
+    and date_format(updateflag,'%y-%m-%d') = date_format(date_sub(CURRENT_TIMESTAMP, interval 1 day) ,'%y-%m-%d')
+  </select>
+
+  <select id="getSafetyToday" resultType="com.gwdtz.springboot.entity.SafetyDayDo">
+    select *
+    from user_safety_day
+    where deptid = #{deptid}
+  </select>
+
+  <select id="getAll" resultType="com.gwdtz.springboot.entity.SafetyDayDo">
+    select *
+    from user_safety_day
+  </select>
+
+<!--  <update id="updateEvent">-->
+<!--    update user_safety_day-->
+<!--    set-->
+<!--    <choose>-->
+<!--      <when test="switchA != null">-->
+<!--        acreatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--        aupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </when>-->
+<!--      <otherwise>-->
+<!--        aupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </otherwise>-->
+<!--    </choose>-->
+<!--    <choose>-->
+<!--      <when test="switchB != null">-->
+<!--        bcreatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--        bupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </when>-->
+<!--      <otherwise>-->
+<!--        bupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </otherwise>-->
+<!--    </choose>-->
+<!--    <choose>-->
+<!--      <when test="switchC != null">-->
+<!--        ccreatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--        cupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </when>-->
+<!--      <otherwise>-->
+<!--        cupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </otherwise>-->
+<!--    </choose>-->
+<!--    <choose>-->
+<!--      <when test="switchD != null">-->
+<!--        dcreatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--        dupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </when>-->
+<!--      <otherwise>-->
+<!--        dupdatetime = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--      </otherwise>-->
+<!--    </choose>-->
+<!--    aday = TIMESTAMPDIFF(DAY, date_format(acreatetime, '%y-%m-%d'), date_format(aupdatetime, '%y-%m-%d')),-->
+<!--    bday = TIMESTAMPDIFF(DAY, date_format(bcreatetime, '%y-%m-%d'), date_format(bupdatetime, '%y-%m-%d')),-->
+<!--    cday = TIMESTAMPDIFF(DAY, date_format(ccreatetime, '%y-%m-%d'), date_format(cupdatetime, '%y-%m-%d')),-->
+<!--    dday = TIMESTAMPDIFF(DAY, date_format(dcreatetime, '%y-%m-%d'), date_format(dupdatetime, '%y-%m-%d')),-->
+<!--    updateflag = date_sub(CURRENT_TIMESTAMP, interval 1 day) ,-->
+<!--    status = 1,-->
+<!--    deleted = 1-->
+<!--    where deptid = #{deptid}-->
+<!--  </update>-->
+  <update id="updateEvent">
+    update user_safety_day
+    set aday = #{aDay},
+        bday = #{bDay},
+        cday = #{cDay},
+        dday = #{dDay},
+        updateflag = date_sub(CURRENT_TIMESTAMP, interval 1 day)
+    where deptid = #{deptid}
+  </update>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_safety_day
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <select id="existYesterday" resultType="com.gwdtz.springboot.entity.SafetyDayDo">
+    select *
+    from user_safety_day
+    where deptid = #{deptid}
+    and date_format(updateflag,'%y-%m-%d') = date_format(date_sub(CURRENT_TIMESTAMP, interval 1 day) ,'%y-%m-%d')
+  </select>
+<!--  <insert id="insert" parameterType="com.gwdtz.springboot.entity.SafetyDayDo" >-->
+<!--    insert into user_safety_day (id, deptid, deptname, -->
+<!--      updateflag, aday, bday,-->
+<!--      cday, dday, acreatetime, -->
+<!--      bcreatetime, ccreatetime, dcreatetime, -->
+<!--      aupdatetime, bupdatetime, cupdatetime, -->
+<!--      dupdatetime, status, deleted-->
+<!--      )-->
+<!--    values (#{id,jdbcType=BIGINT}, #{deptid,jdbcType=BIGINT}, #{deptname,jdbcType=VARCHAR}, -->
+<!--      #{updateflag,jdbcType=TIMESTAMP}, #{aday,jdbcType=BIGINT}, #{bday,jdbcType=BIGINT},-->
+<!--      #{cday,jdbcType=BIGINT}, #{dday,jdbcType=BIGINT}, #{acreatetime,jdbcType=TIMESTAMP}, -->
+<!--      #{bcreatetime,jdbcType=TIMESTAMP}, #{ccreatetime,jdbcType=TIMESTAMP}, #{dcreatetime,jdbcType=TIMESTAMP}, -->
+<!--      #{aupdatetime,jdbcType=TIMESTAMP}, #{bupdatetime,jdbcType=TIMESTAMP}, #{cupdatetime,jdbcType=TIMESTAMP}, -->
+<!--      #{dupdatetime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{deleted,jdbcType=INTEGER}-->
+<!--      )-->
+<!--  </insert>-->
+<!--  <insert id="insertSelective" parameterType="com.gwdtz.springboot.entity.SafetyDayDo" >-->
+<!--    insert into user_safety_day-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides="," >-->
+<!--      <if test="id != null" >-->
+<!--        id,-->
+<!--      </if>-->
+<!--      <if test="deptid != null" >-->
+<!--        deptid,-->
+<!--      </if>-->
+<!--      <if test="deptname != null" >-->
+<!--        deptname,-->
+<!--      </if>-->
+<!--      <if test="updateflag != null" >-->
+<!--        updateflag,-->
+<!--      </if>-->
+<!--      <if test="aday != null" >-->
+<!--        aday,-->
+<!--      </if>-->
+<!--      <if test="bday != null" >-->
+<!--        bday,-->
+<!--      </if>-->
+<!--      <if test="cday != null" >-->
+<!--        cday,-->
+<!--      </if>-->
+<!--      <if test="dday != null" >-->
+<!--        dday,-->
+<!--      </if>-->
+<!--      <if test="acreatetime != null" >-->
+<!--        acreatetime,-->
+<!--      </if>-->
+<!--      <if test="bcreatetime != null" >-->
+<!--        bcreatetime,-->
+<!--      </if>-->
+<!--      <if test="ccreatetime != null" >-->
+<!--        ccreatetime,-->
+<!--      </if>-->
+<!--      <if test="dcreatetime != null" >-->
+<!--        dcreatetime,-->
+<!--      </if>-->
+<!--      <if test="aupdatetime != null" >-->
+<!--        aupdatetime,-->
+<!--      </if>-->
+<!--      <if test="bupdatetime != null" >-->
+<!--        bupdatetime,-->
+<!--      </if>-->
+<!--      <if test="cupdatetime != null" >-->
+<!--        cupdatetime,-->
+<!--      </if>-->
+<!--      <if test="dupdatetime != null" >-->
+<!--        dupdatetime,-->
+<!--      </if>-->
+<!--      <if test="status != null" >-->
+<!--        status,-->
+<!--      </if>-->
+<!--      <if test="deleted != null" >-->
+<!--        deleted,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides="," >-->
+<!--      <if test="id != null" >-->
+<!--        #{id,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="deptid != null" >-->
+<!--        #{deptid,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="deptname != null" >-->
+<!--        #{deptname,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="updateflag != null" >-->
+<!--        #{updateflag,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="aday != null" >-->
+<!--        #{aday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="bday != null" >-->
+<!--        #{bday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="cday != null" >-->
+<!--        #{cday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="dday != null" >-->
+<!--        #{dday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="acreatetime != null" >-->
+<!--        #{acreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="bcreatetime != null" >-->
+<!--        #{bcreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="ccreatetime != null" >-->
+<!--        #{ccreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="dcreatetime != null" >-->
+<!--        #{dcreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="aupdatetime != null" >-->
+<!--        #{aupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="bupdatetime != null" >-->
+<!--        #{bupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="cupdatetime != null" >-->
+<!--        #{cupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="dupdatetime != null" >-->
+<!--        #{dupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="status != null" >-->
+<!--        #{status,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="deleted != null" >-->
+<!--        #{deleted,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.gwdtz.springboot.entity.SafetyDayDo" >-->
+<!--    update user_safety_day-->
+<!--    <set >-->
+<!--      <if test="deptid != null" >-->
+<!--        deptid = #{deptid,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="deptname != null" >-->
+<!--        deptname = #{deptname,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="updateflag != null" >-->
+<!--        updateflag = #{updateflag,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="aday != null" >-->
+<!--        aday = #{aday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="bday != null" >-->
+<!--        bday = #{bday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="cday != null" >-->
+<!--        cday = #{cday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="dday != null" >-->
+<!--        dday = #{dday,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="acreatetime != null" >-->
+<!--        acreatetime = #{acreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="bcreatetime != null" >-->
+<!--        bcreatetime = #{bcreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="ccreatetime != null" >-->
+<!--        ccreatetime = #{ccreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="dcreatetime != null" >-->
+<!--        dcreatetime = #{dcreatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="aupdatetime != null" >-->
+<!--        aupdatetime = #{aupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="bupdatetime != null" >-->
+<!--        bupdatetime = #{bupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="cupdatetime != null" >-->
+<!--        cupdatetime = #{cupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="dupdatetime != null" >-->
+<!--        dupdatetime = #{dupdatetime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="status != null" >-->
+<!--        status = #{status,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="deleted != null" >-->
+<!--        deleted = #{deleted,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+<!--  <update id="updateByPrimaryKey" parameterType="com.gwdtz.springboot.entity.SafetyDayDo" >-->
+<!--    update user_safety_day-->
+<!--    set deptid = #{deptid,jdbcType=BIGINT},-->
+<!--      deptname = #{deptname,jdbcType=VARCHAR},-->
+<!--      updateflag = #{updateflag,jdbcType=TIMESTAMP},-->
+<!--      aday = #{aday,jdbcType=BIGINT},-->
+<!--      bday = #{bday,jdbcType=BIGINT},-->
+<!--      cday = #{cday,jdbcType=BIGINT},-->
+<!--      dday = #{dday,jdbcType=BIGINT},-->
+<!--      acreatetime = #{acreatetime,jdbcType=TIMESTAMP},-->
+<!--      bcreatetime = #{bcreatetime,jdbcType=TIMESTAMP},-->
+<!--      ccreatetime = #{ccreatetime,jdbcType=TIMESTAMP},-->
+<!--      dcreatetime = #{dcreatetime,jdbcType=TIMESTAMP},-->
+<!--      aupdatetime = #{aupdatetime,jdbcType=TIMESTAMP},-->
+<!--      bupdatetime = #{bupdatetime,jdbcType=TIMESTAMP},-->
+<!--      cupdatetime = #{cupdatetime,jdbcType=TIMESTAMP},-->
+<!--      dupdatetime = #{dupdatetime,jdbcType=TIMESTAMP},-->
+<!--      status = #{status,jdbcType=INTEGER},-->
+<!--      deleted = #{deleted,jdbcType=INTEGER}-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+</mapper>
